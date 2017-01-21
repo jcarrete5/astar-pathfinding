@@ -1,2 +1,2 @@
-# astar-pathfinding
-A* path-finding algorithm implemented in Python
+# pathfinding
+path-finding algorithms implemented in Python
