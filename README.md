@@ -1,2 +1,2 @@
 # pathfinding
-path-finding algorithms implemented in Python
+path-finding algorithms implemented in JavaScript
