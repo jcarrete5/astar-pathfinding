@@ -16,7 +16,17 @@ header h1 {
 
 main {
     margin: auto;
-    text-align: center;
+}
+
+#settings {
+    margin: 1em auto;
+    width: 70%;
+}
+
+#app-wrapper {
+    margin: auto;
+    width: 800px;
+    height: 600px;
 }
 
 footer {
