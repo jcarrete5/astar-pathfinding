@@ -1,12 +1,12 @@
 body {
     font-family: sans-serif;
-    margin: auto;
+    margin: 1em auto;
     width: 80%;
 }
 
 header {
     text-align: center;
-    margin: 1em;
+    margin-bottom: 1em;
 }
 
 header h1 {
@@ -14,23 +14,12 @@ header h1 {
     padding: 0;
 }
 
-main {
-    margin: auto;
-}
-
-#settings {
-    margin: 1em auto;
-    width: 70%;
-}
-
 #app-wrapper {
     margin: auto;
-    width: 800px;
-    height: 600px;
 }
 
 footer {
-    margin: 1em;
+    margin: 1em 0;
     text-align: center;
     color: #b3b3b3;
 }
