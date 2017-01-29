@@ -1,7 +1,15 @@
+/*
+ * Max heap implementation, however the comparator function determines what
+ * elements are greater than others. The comparator is used to compare items
+ * when reconstructing the heap.
+ */
 function Heap(comparator) {
     this.data = [null];
     this.comparator = comparator;
     
+    /*
+     * Inserts the item into the heap.
+     */
     this.insert = function(item) {
         this.data.push(item);
         var childIndex = this.data.length - 1;
@@ -44,7 +52,15 @@ function Heap(comparator) {
         return ret;
     };
     
+    this.peek = function() {
+        return this.data[1];
+    }
+    
+    this.getData = function() {
+        return this.data;
+    };
+    
     this.size = function() {
-        return data.length;
+        return this.data.length;
     };
 }
