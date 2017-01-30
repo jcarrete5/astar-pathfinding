@@ -2,6 +2,9 @@ function Cell(row, col) {
     this.row = row;
     this.col = col;
     this.wall = false;
+    if(random() < 0.33) {
+        this.wall = true;
+    }
     
     this.render = function() {
         strokeWeight(1);
@@ -11,6 +14,10 @@ function Cell(row, col) {
         } else {
             noFill();
         }
-        rect(col * cellSize, row * cellSize, cellSize-1, cellSize-1);
+        rect(col * cellSize, row * cellSize, cellSize, cellSize);
     };
+    
+    this.id = function() {
+        return this.row * gridSize + this.col;
+    }
 }

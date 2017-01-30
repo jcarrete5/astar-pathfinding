@@ -14,7 +14,7 @@ function Heap(comparator) {
         this.data.push(item);
         var childIndex = this.data.length - 1;
         var parentIndex = floor(childIndex / 2);
-        while(parentIndex > 0 && comparator(this.data[childIndex], this.data[parentIndex]) > 0) {
+        while(parentIndex > 0 && this.comparator(this.data[childIndex], this.data[parentIndex]) > 0) {
             var tmp = this.data[parentIndex];
             this.data[parentIndex] = this.data[childIndex];
             this.data[childIndex] = tmp;

@@ -1,6 +1,7 @@
-var gridSize = 10; //num of rows and cols
-var cellSize; //size in 'px' of each cell
+var gridSize = 10; // Num of rows and cols
+var cellSize; // Size in 'px' of each cell
 var grid = [];
+var path;
 
 function setup() {
     var appWrapper = document.getElementById('app-wrapper');
@@ -17,6 +18,10 @@ function setup() {
             grid[r][c] = new Cell(r, c);
         }
     }
+    
+    path = new ASTAR_Path(grid[0][0], grid[gridSize-1][gridSize-1]);
+    path.start.wall = false;
+    path.goal.wall = false;
 }
 
 function draw() {
@@ -27,4 +32,7 @@ function draw() {
             grid[r][c].render();
         }
     }
+    
+    path.update();
+    path.render();
 }
