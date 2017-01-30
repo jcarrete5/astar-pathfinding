@@ -1,4 +1,4 @@
-var gridSize = 10; // Num of rows and cols
+var gridSize = 40; // Num of rows and cols
 var cellSize; // Size in 'px' of each cell
 var grid = [];
 var path;

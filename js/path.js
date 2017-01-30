@@ -13,7 +13,7 @@ function ASTAR_Path(start, goal) {
     this.goal = goal;
     this.gScore = {}; // The cost of getting from the start node to each node
     this.fScore = {}; // gScore + hScore
-    this.openSet = new Heap(function(child, parent) {
+    this.openSet = new Heap(function(child, parent) { // Closest child is always root
         return path.fScore[parent.id()] - path.fScore[child.id()];
     });
     this.openSet.insert(start);
@@ -29,39 +29,44 @@ function ASTAR_Path(start, goal) {
     
     this.gScore[this.start.id()] = 0;
     this.fScore[this.start.id()] = heuristic(this.start, this.goal);
+    this.neighborOffset = [ [0, 1], [1, 0], [0, -1], [-1, 0], [1, 1], [-1, 1], [1, -1], [-1, -1] ];
     
     this.update = function() {
         if(this.foundPath || this.noPath) return;
         
         if(this.openSet.size() > 1) {
-             this.current = this.openSet.extract();
-             if(this.current.id() === this.goal.id()) {
-                 //Found path
-                 this.foundPath = true;
-                 return;
-             }
-             
-             this.closedSet[this.current.id()] = this.current;
-             for(var i = -2; i < 2; i++) {
-                 var row = (i + 1) % 2 + this.current.row;
-                 var col = (i % 2) + this.current.col;
-                 if(row < 0 || col < 0 || row >= gridSize || col >= gridSize) continue;
-                 var neighbor = grid[row][col];
-                 if(this.closedSet[neighbor.id()] !== undefined) continue;
-                 if(neighbor.wall === true) continue;
-                 
-                 var tentative_gScore = this.gScore[this.current.id()] + distance(this.current, neighbor);
-                 if(this.openSet.getData()[neighbor.id() + 1] === undefined) {
-                     this.openSet.insert(neighbor);
-                 } else if(tentative_gScore >= this.gScore[neighbor.id]) {
-                     // Not a better path
-                     continue;
-                 }
-                 
-                 this.cameFrom[neighbor.id()] = this.current;
-                 this.gScore[neighbor.id()] = tentative_gScore;
-                 this.fScore[neighbor.id()] = this.gScore[neighbor.id()] + heuristic(neighbor, this.goal);
-             }
+            this.current = this.openSet.extract();
+            if(this.current.id() === this.goal.id()) {
+                //Found path
+                this.foundPath = true;
+                return;
+            }
+            
+            this.closedSet[this.current.id()] = this.current;
+            this.current['open'] = false;
+            for(var i = 0; i < 8; i++) {
+                var row = this.neighborOffset[i][0] + this.current.row;
+                var col = this.neighborOffset[i][1] + this.current.col;
+                // var row = (i + 1) % 2 + this.current.row;
+                // var col = (i % 2) + this.current.col;
+                if(row < 0 || col < 0 || row >= gridSize || col >= gridSize) continue;
+                var neighbor = grid[row][col];
+                if(this.closedSet[neighbor.id()] !== undefined) continue;
+                if(neighbor.wall === true) continue;
+                
+                var tentative_gScore = this.gScore[this.current.id()] + distance(this.current, neighbor);
+                if(neighbor['open'] === undefined) {
+                    neighbor['open'] = true;
+                    this.openSet.insert(neighbor);
+                } else if(tentative_gScore >= this.gScore[neighbor.id()]) {
+                    // Not a better path
+                    continue;
+                }
+                
+                this.cameFrom[neighbor.id()] = this.current;
+                this.gScore[neighbor.id()] = tentative_gScore;
+                this.fScore[neighbor.id()] = this.gScore[neighbor.id()] + heuristic(neighbor, this.goal);
+            }
         } else {
             this.noPath = true;
         }
@@ -87,9 +92,11 @@ function ASTAR_Path(start, goal) {
         // Render current best path
         noStroke();
         fill('blue');
+        if(this.noPath) fill('red');
+        if(this.foundPath) fill('purple');
         var curCell = this.current;
         rect(this.start.col * cellSize + 1, this.start.row * cellSize + 1, cellSize - 1, cellSize - 1);
-        while(curCell.id() !== 0) {
+        while(curCell.id() !== this.start.id()) {
             rect(curCell.col * cellSize + 1, curCell.row * cellSize + 1, cellSize - 1, cellSize - 1);
             curCell = this.cameFrom[curCell.id()];
         }
