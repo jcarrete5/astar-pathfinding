@@ -2,7 +2,7 @@ function Cell(row, col) {
     this.row = row;
     this.col = col;
     this.wall = false;
-    if(random() < 0.33) {
+    if(random() < wallPct) {
         this.wall = true;
     }
     

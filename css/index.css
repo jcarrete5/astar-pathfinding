@@ -15,11 +15,16 @@ header h1 {
 }
 
 #app-wrapper {
-    margin: auto;
+    margin: 1em auto;
 }
 
 footer {
     margin: 1em 0;
     text-align: center;
     color: #b3b3b3;
+}
+
+.center {
+    text-align: center;
+    margin: 0 auto;
 }

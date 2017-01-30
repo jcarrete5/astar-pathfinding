@@ -18,6 +18,21 @@
         <h1>Pathfinding</h1>
     </header>
     <main>
+        <div class="center">
+            <table class="center">
+                <tr>
+                    <th>Grid Size</th>
+                    <th>Wall %</th>
+                </tr>
+                <tr>
+                    <td><input type="number" id="gridSize" value="10" /></td>
+                    <td><input type="range" id="wallPct" value="33" /></td>
+                </tr>
+            </table>
+        </div>
+        <div class="center">
+            <button onclick="reRun();">Reset</button>
+        </div>
         <div id="app-wrapper" style="width:50%;"></div>
     </main>
     <footer>
