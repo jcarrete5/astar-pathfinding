@@ -4,6 +4,8 @@ var wallPct; // Percentage of walls
 var grid;
 var path;
 
+var render = true;
+
 function setup() {
     var appWrapper = document.getElementById('app-wrapper');
     appWrapper.style.height = appWrapper.offsetWidth + 'px';
@@ -14,6 +16,7 @@ function setup() {
 }
 
 function draw() {
+    if(!render) return;
     background(255);
     
     for(var r = 0; r < gridSize; r++) {
@@ -28,12 +31,16 @@ function draw() {
 
 function reRun() {
     grid = [];
-    gridSize = document.getElementById('gridSize').value;
+    gridSize = parseInt(document.getElementById('gridSize').value);
     if(gridSize < 10) {
         alert("Grid size must be at least 10!");
+        render = false;
         return;
     }
-    wallPct = document.getElementById('wallPct').value / 100;
+    var startPos = document.getElementById('startPos').value.split(' ');
+    var goalPos = document.getElementById('goalPos').value.split(' ');
+    render = true;
+    wallPct = parseInt(document.getElementById('wallPct').value) / 100;
     cellSize = floor(width / gridSize);
     
     // Setup grid
@@ -44,7 +51,8 @@ function reRun() {
         }
     }
     
-    path = new ASTAR_Path(grid[0][0], grid[gridSize-1][gridSize-1]);
+    path = new ASTAR_Path(grid[parseInt(startPos[0])][parseInt(startPos[1])],
+        grid[parseInt(goalPos[0])][parseInt(goalPos[1])]);
     path.start.wall = false;
     path.goal.wall = false;
 }
